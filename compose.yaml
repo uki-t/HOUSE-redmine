@@ -1,5 +1,4 @@
 services:
-
   redmine:
     image: redmine
     restart: always
@@ -9,6 +8,8 @@ services:
       REDMINE_DB_MYSQL: db
       REDMINE_DB_PASSWORD: example
       REDMINE_SECRET_KEY_BASE: supersecretkey
+    depends_on:
+      - db
 
   db:
     image: mysql:8.0
@@ -16,4 +17,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: redmine
+    volumes:
+      - redmine_db_data:/var/lib/mysql
 
+volumes:
+  redmine_db_data:
